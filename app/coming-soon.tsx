@@ -241,9 +241,8 @@ function OrbitalCarousel() {
             key={i}
             onClick={() => setActiveIdx(i)}
             aria-label={`Show product ${i + 1}`}
-            className={`h-1 rounded-full transition-all duration-500 ${
-              i === activeIdx ? 'w-6 bg-white/60' : 'w-1.5 bg-white/15 hover:bg-white/30'
-            }`}
+            className={`h-1 rounded-full transition-all duration-500 ${i === activeIdx ? 'w-6 bg-white/60' : 'w-1.5 bg-white/15 hover:bg-white/30'
+              }`}
           />
         ))}
       </div>
@@ -380,7 +379,7 @@ export function ComingSoonPage() {
               transition={{ duration: 0.7, delay: 0.5 }}
               className="text-base sm:text-lg text-white/45 font-light max-w-md leading-relaxed lg:mb-7"
             >
-              Reliable self-testing you can do at home —
+              Reliable self-testing you can do at home,
               <br className="hidden sm:block" />
               results in 5 minutes, starting at just ₹99.
             </motion.p>
@@ -512,7 +511,7 @@ export function ComingSoonPage() {
 
             {/* Company attribution */}
             <p className="text-[9px] text-white/[0.08] mt-5 tracking-[0.2em] uppercase font-medium">
-              An Initiative by Santa Clara Pvt. Ltd.
+              An Initiative by Santa Clara Wellness Pvt. Ltd.
             </p>
           </div>
         </motion.div>
@@ -583,7 +582,7 @@ export function ComingSoonPage() {
           QUIQ combines cutting-edge lateral flow diagnostic technology with thoughtful design
           to create self-test kits that anyone can use at home — no training required.
           We firmly believe that everyone should have the ability to manage their health on
-          their own terms. QUIQ is an initiative by Santa Clara Pvt. Ltd., committed to
+          their own terms. QUIQ is an initiative by Santa Clara Wellness Pvt. Ltd., committed to
           democratising healthcare across India.
         </p>
 

@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   ],
 
   authors: [{ name: 'QUIQ', url: 'https://quiq.health' }],
-  creator: 'QUIQ — An Initiative by Santa Clara Pvt. Ltd.',
+  creator: 'QUIQ — An Initiative by Santa Clara Wellness Pvt. Ltd.',
   publisher: 'QUIQ',
 
   alternates: {

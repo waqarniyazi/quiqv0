@@ -6,7 +6,7 @@ import { ComingSoonPage } from './coming-soon'
    ═══════════════════════════════════════════════════════════════════ */
 
 export const metadata: Metadata = {
-  title: 'QUIQ — Affordable At-Home Self-Test Kits India | 20+ Health Tests Starting at ₹99 | Launching Soon',
+  title: 'QUIQ — Affordable  Self-Test Kits India | 20+ Health Tests Starting at ₹99 | Launching Soon',
   description:
     'QUIQ is launching in India — 20+ at-home self-test kits for Vitamin D, B12, TSH, HbA1c, CRP, Ferritin & more. One drop of blood, lab-grade results in 5 minutes, starting at just ₹99. No lab visit. Completely private. Join the waitlist.',
   alternates: {
@@ -23,7 +23,7 @@ const organizationJsonLd = {
   '@type': 'Organization',
   '@id': 'https://quiq.health/#organization',
   name: 'QUIQ',
-  legalName: 'QUIQ — An Initiative by Santa Clara Pvt. Ltd.',
+  legalName: 'QUIQ — An Initiative by Santa Clara Wellness Pvt. Ltd.',
   url: 'https://quiq.health',
   logo: 'https://quiq.health/quiq-logo.png',
   image: 'https://quiq.health/og-image.png',
@@ -32,7 +32,7 @@ const organizationJsonLd = {
   foundingDate: '2024',
   parentOrganization: {
     '@type': 'Organization',
-    name: 'Santa Clara Pvt. Ltd.',
+    name: 'Santa Clara Wellness Pvt. Ltd.',
   },
   areaServed: {
     '@type': 'Country',
@@ -303,7 +303,7 @@ const faqJsonLd = {
       name: 'Who is behind QUIQ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'QUIQ is an initiative by Santa Clara Pvt. Ltd. Our mission is to democratize healthcare in India by making affordable, high-quality self-testing diagnostics accessible to everyone.',
+        text: 'QUIQ is an initiative by Santa Clara Wellness Pvt. Ltd. Our mission is to democratize healthcare in India by making affordable, high-quality self-testing diagnostics accessible to everyone.',
       },
     },
   ],
