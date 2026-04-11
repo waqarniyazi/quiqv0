@@ -279,7 +279,7 @@ export function ComingSoonPage() {
   }
 
   return (
-    <div className="min-h-screen lg:h-screen bg-black text-white relative overflow-x-hidden lg:overflow-hidden">
+    <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
       {/* ── Self-contained keyframes ─────────────────────────── */}
       <style>{`
         @keyframes pulse-glow {
@@ -326,7 +326,7 @@ export function ComingSoonPage() {
           ══════════════════════════════════════════════════════════ */}
       <div className="relative z-10 w-full flex flex-col">
         {/* HERO SECTION */}
-        <div className="min-h-[100svh] lg:min-h-[85vh] flex-1 flex flex-col lg:grid lg:grid-cols-[44%_56%] items-center pt-24 lg:pt-20 pb-4 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1600px] mx-auto w-full">
+        <div className="flex-1 flex flex-col lg:grid lg:grid-cols-[44%_56%] items-center pt-24 lg:pt-28 pb-4 lg:pb-12 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1600px] mx-auto w-full">
 
           {/* ──────── TOP LEFT: Text & Headings & CTA ──────── */}
           <div className="w-full flex flex-col justify-center items-center lg:items-start text-center lg:text-left mb-2 lg:mb-0 lg:pr-8 order-1 lg:col-start-1 lg:row-start-1 lg:self-center">
@@ -407,11 +407,26 @@ export function ComingSoonPage() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════
+            ABOUT & MISSION
+            ══════════════════════════════════════════════════════════ */}
+        <section className="max-w-3xl mx-auto px-6 py-12 sm:py-16 text-center">
+          <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.2em] uppercase mb-4 font-medium">
+            Our Mission
+          </p>
+          <h2 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 leading-snug">
+            We aim to provide affordable and high quality self testing diagnostics to everyone in India.
+          </h2>
+          <p className="text-white/50 text-base sm:text-lg leading-relaxed font-light mt-2 max-w-2xl mx-auto">
+             At QUIQ, we believe that knowledge is power. We are empowering individuals to take control of their own healthcare through proactive and preventative testing starting at just ₹99.
+          </p>
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
             BRANDS MARQUEE
             ══════════════════════════════════════════════════════════ */}
-        <section className="w-full relative mt-16 sm:mt-24 mb-16 overflow-hidden flex flex-col items-center">
-          <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.2em] uppercase mb-10 font-medium">
-            Available at your favorite pharmacy partners
+        <section className="w-full relative py-8 sm:py-12 mb-8 overflow-hidden flex flex-col items-center">
+          <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.2em] uppercase mb-8 font-medium">
+            Partnered with
           </p>
           <div className="flex w-full overflow-hidden">
             <motion.div
@@ -431,16 +446,6 @@ export function ComingSoonPage() {
               </div>
             </motion.div>
           </div>
-        </section>
-
-        {/* ══════════════════════════════════════════════════════════
-            ABOUT & MISSION
-            ══════════════════════════════════════════════════════════ */}
-        <section className="max-w-3xl mx-auto px-6 py-16 sm:py-24 text-center">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-6">Our Mission</h2>
-          <p className="text-white/60 text-lg sm:text-xl leading-relaxed font-light">
-             At QUIQ, we believe that knowledge is power. Our mission is to empower individuals to take control of their own healthcare through proactive and preventative testing starting at just ₹99. We are bringing lab-grade self-testing diagnostics to every Indian home.
-          </p>
         </section>
 
         {/* ══════════════════════════════════════════════════════════
