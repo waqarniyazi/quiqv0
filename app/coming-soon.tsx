@@ -258,6 +258,7 @@ export function ComingSoonPage() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const gradientRef = useRef<HTMLDivElement>(null)
 
   /* ── Mouse-following ambient glow (desktop only) ──────────── */
@@ -342,13 +343,13 @@ export function ComingSoonPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] mb-6 lg:mb-8"
+              className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-emerald-500/40 bg-emerald-500/15 mb-6 lg:mb-8 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
             >
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
               </span>
-              <span className="text-[11px] text-white/50 font-medium tracking-wider uppercase">
+              <span className="text-xs sm:text-sm text-emerald-400 font-bold tracking-widest uppercase">
                 Launching Soon
               </span>
             </motion.div>
@@ -410,10 +411,10 @@ export function ComingSoonPage() {
                   initial={{ opacity: 0, scale: 0.85 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.35, delay: 0.75 + i * 0.08 }}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-300 cursor-default"
+                  className="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/10 border border-white/20 hover:bg-white/15 transition-all duration-300 cursor-default"
                 >
-                  <h.Icon className="w-3.5 h-3.5 text-white/40" />
-                  <span className="text-[11px] sm:text-xs font-medium text-white/55">{h.label}</span>
+                  <h.Icon className="w-4 h-4 sm:w-5 sm:h-5 text-white/80" />
+                  <span className="text-sm sm:text-base font-semibold text-white">{h.label}</span>
                 </motion.div>
               ))}
             </motion.div>
@@ -431,14 +432,14 @@ export function ComingSoonPage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, delay: 1.15 + i * 0.05 }}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-full transition-all duration-300 hover:scale-105 cursor-default"
+                  className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full transition-all duration-300 hover:scale-105 cursor-default"
                   style={{
-                    background: `${cat.color}0a`,
-                    border: `1px solid ${cat.color}18`,
+                    background: `${cat.color}15`,
+                    border: `1px solid ${cat.color}30`,
                   }}
                 >
-                  <cat.Icon className="w-2.5 h-2.5" style={{ color: `${cat.color}88` }} />
-                  <span className="text-[10px] font-medium" style={{ color: `${cat.color}77` }}>
+                  <cat.Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: `${cat.color}ee` }} />
+                  <span className="text-[11px] sm:text-sm font-semibold" style={{ color: `${cat.color}ee` }}>
                     {cat.label}
                   </span>
                 </motion.div>
@@ -462,60 +463,95 @@ export function ComingSoonPage() {
           </div>
 
           <div className="max-w-lg mx-auto text-center">
-            <p className="text-[10px] sm:text-xs text-white/25 tracking-[0.2em] uppercase mb-3 font-medium">
-              Be first in line
-            </p>
-
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2.5">
-              <div className="relative flex-1">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
-                <input
-                  id="coming-soon-email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  disabled={submitted}
-                  className="w-full pl-11 pr-4 py-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white placeholder:text-white/25 text-sm focus:outline-none focus:border-white/20 focus:bg-white/[0.06] transition-all duration-300 disabled:opacity-50"
-                />
-              </div>
-
-              <div className="relative" style={{ overflow: 'visible' }}>
-                <button
-                  id="coming-soon-submit"
-                  type="submit"
-                  disabled={submitted}
-                  className="w-full sm:w-auto px-7 py-3 rounded-full bg-white text-black font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-[0.98] disabled:hover:scale-100"
-                  style={{ animation: submitted ? 'none' : 'pulse-glow 3s ease-in-out infinite' }}
-                >
-                  {submitted ? (
-                    <>
-                      <Check className="w-4 h-4" />
-                      <span>You&apos;re on the list!</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Remind Me</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
-                <ConfettiBurst active={showConfetti} />
-              </div>
-            </form>
-
-            <p className="text-[10px] text-white/15 mt-3">
-              Join the waitlist — we&apos;ll only email you at launch.
-            </p>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-8 py-3.5 rounded-full bg-white text-black font-bold text-sm sm:text-base transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+              style={{ animation: 'pulse-glow 3s ease-in-out infinite' }}
+            >
+              Get Notified on Launch
+            </button>
 
             {/* Company attribution */}
-            <p className="text-[9px] text-white/[0.08] mt-5 tracking-[0.2em] uppercase font-medium">
+            <p className="text-[10px] sm:text-[11px] text-white/40 mt-8 tracking-[0.2em] uppercase font-semibold">
               An Initiative by Santa Clara Wellness Pvt. Ltd.
             </p>
           </div>
         </motion.div>
       </div>
+
+      {/* ══════════════════════════════════════════════════════════
+          MODAL DIALOG
+          ══════════════════════════════════════════════════════════ */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-md bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden"
+            >
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors p-2"
+              >
+                ✕
+              </button>
+              
+              <h2 className="text-xl sm:text-2xl font-bold mb-3">Be first in line</h2>
+              <p className="text-white/60 mb-8 text-sm leading-relaxed">
+                QUIQ is bringing lab-grade self-testing to every Indian home. 
+                Join our waitlist to be notified the exact moment we launch our testing kits.
+              </p>
+              
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                  <input
+                    id="coming-soon-email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    disabled={submitted}
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all duration-300 disabled:opacity-50"
+                  />
+                </div>
+
+                <div className="relative" style={{ overflow: 'visible' }}>
+                  <button
+                    type="submit"
+                    disabled={submitted}
+                    className="w-full py-3.5 rounded-xl bg-white text-black font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 disabled:opacity-80 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                  >
+                    {submitted ? (
+                      <>
+                        <Check className="w-5 h-5" />
+                        <span>You&apos;re on the list!</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Join Waitlist</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </>
+                    )}
+                  </button>
+                  <ConfettiBurst active={showConfetti} />
+                </div>
+              </form>
+              <p className="text-[11px] text-white/40 mt-5 text-center">
+                We&apos;ll only email you at launch. No spam.
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Edge gradients ───────────────────────────────────── */}
       <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent z-0 pointer-events-none" />
