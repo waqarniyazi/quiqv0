@@ -51,6 +51,21 @@ const organizationJsonLd = {
   sameAs: [
     'https://quiqtest.com',
   ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+91-22-6725-8000',
+    contactType: 'customer service',
+    email: 'info@quiq.health',
+    areaServed: 'IN',
+    availableLanguage: ['en', 'hi'],
+  },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '6C3, Gundecha Enclave, Kherani Road, Saki Naka',
+    addressLocality: 'Andheri East, Mumbai',
+    postalCode: '400072',
+    addressCountry: 'IN',
+  },
 }
 
 const websiteJsonLd = {

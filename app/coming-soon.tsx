@@ -4,8 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import {
-  Coins, Home, Zap, ShieldCheck,
-  Sun, Activity, Shield, Heart, Droplets,
+  Zap, Sun, Activity, Shield, Heart, Droplets,
   ArrowRight, Mail, Check,
 } from 'lucide-react'
 
@@ -19,13 +18,6 @@ const PRODUCTS = [
   { src: '/hero-test-images/anemia.webp', label: 'Ferritin' },
   { src: '/hero-test-images/crp.webp', label: 'CRP' },
   { src: '/hero-test-images/vitamin b12.webp', label: 'Vitamin B12' },
-]
-
-const HIGHLIGHTS = [
-  { Icon: Coins, label: 'Starting at ₹99' },
-  { Icon: Home, label: 'At Home' },
-  { Icon: Zap, label: '5 Minutes' },
-  { Icon: ShieldCheck, label: 'Private' },
 ]
 
 const CATEGORIES = [
@@ -332,11 +324,12 @@ export function ComingSoonPage() {
       {/* ══════════════════════════════════════════════════════════
           MAIN CONTENT — split layout desktop, stacked mobile
           ══════════════════════════════════════════════════════════ */}
-      <div className="relative z-10 min-h-screen lg:h-screen flex flex-col">
-        <div className="flex-1 flex flex-col lg:grid lg:grid-cols-[44%_56%] items-center pt-24 lg:pt-20 pb-4 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1600px] mx-auto w-full">
+      <div className="relative z-10 w-full flex flex-col">
+        {/* HERO SECTION */}
+        <div className="min-h-[100svh] lg:min-h-[85vh] flex-1 flex flex-col lg:grid lg:grid-cols-[44%_56%] items-center pt-24 lg:pt-20 pb-4 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1600px] mx-auto w-full">
 
-          {/* ──────── TOP LEFT: Text & Headings ──────── */}
-          <div className="w-full flex flex-col justify-center items-center lg:items-start text-center lg:text-left mb-2 lg:mb-0 lg:pr-8 order-1 lg:col-start-1 lg:row-start-1 lg:self-end">
+          {/* ──────── TOP LEFT: Text & Headings & CTA ──────── */}
+          <div className="w-full flex flex-col justify-center items-center lg:items-start text-center lg:text-left mb-2 lg:mb-0 lg:pr-8 order-1 lg:col-start-1 lg:row-start-1 lg:self-center">
 
             {/* "Launching Soon" badge */}
             <motion.div
@@ -378,12 +371,28 @@ export function ComingSoonPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
-              className="text-base sm:text-lg text-white/45 font-light max-w-md leading-relaxed lg:mb-7"
+              className="text-base sm:text-lg text-white/45 font-light max-w-md leading-relaxed lg:mb-3"
             >
               Reliable self-testing you can do at home,
               <br className="hidden sm:block" />
               results in 5 minutes, starting at just ₹99.
             </motion.p>
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.7 }}
+              className="mt-8 lg:mt-10"
+            >
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="px-8 py-3.5 rounded-full bg-white text-black font-bold text-sm sm:text-base transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+                style={{ animation: 'pulse-glow 3s ease-in-out infinite' }}
+              >
+                Get Notified on Launch
+              </button>
+            </motion.div>
           </div>
 
           {/* ──────── CAROUSEL: Middle on Mobile, Right Column on Desktop ──────── */}
@@ -391,92 +400,86 @@ export function ComingSoonPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="w-full flex items-center justify-center order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 pt-4 pb-2 lg:py-0"
+            className="w-full flex items-center justify-center order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 pt-10 pb-6 lg:py-0"
           >
             <OrbitalCarousel />
           </motion.div>
-
-          {/* ──────── BOTTOM LEFT: Badges ──────── */}
-          <div className="w-full flex flex-col items-center lg:items-start order-3 lg:col-start-1 lg:row-start-2 lg:self-start mt-2 lg:mt-0 lg:pr-8">
-            {/* Highlight pills */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="flex flex-wrap gap-2 sm:gap-2.5 mb-5 justify-center lg:justify-start"
-            >
-              {HIGHLIGHTS.map((h, i) => (
-                <motion.div
-                  key={h.label}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.35, delay: 0.75 + i * 0.08 }}
-                  className="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/10 border border-white/20 hover:bg-white/15 transition-all duration-300 cursor-default"
-                >
-                  <h.Icon className="w-4 h-4 sm:w-5 sm:h-5 text-white/80" />
-                  <span className="text-sm sm:text-base font-semibold text-white">{h.label}</span>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Category badges */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.1 }}
-              className="flex flex-wrap gap-1.5 sm:gap-2 justify-center lg:justify-start"
-            >
-              {CATEGORIES.map((cat, i) => (
-                <motion.div
-                  key={cat.label}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3, delay: 1.15 + i * 0.05 }}
-                  className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full transition-all duration-300 hover:scale-105 cursor-default"
-                  style={{
-                    background: `${cat.color}15`,
-                    border: `1px solid ${cat.color}30`,
-                  }}
-                >
-                  <cat.Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: `${cat.color}ee` }} />
-                  <span className="text-[11px] sm:text-sm font-semibold" style={{ color: `${cat.color}ee` }}>
-                    {cat.label}
-                  </span>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-            CTA SECTION — "Remind Me" email capture
+            BRANDS MARQUEE
             ══════════════════════════════════════════════════════════ */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.0 }}
-          className="flex-shrink-0 px-6 pb-6 sm:pb-10"
-        >
-          {/* Gradient separator */}
-          <div className="max-w-xl mx-auto mb-5">
-            <div className="h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-          </div>
-
-          <div className="max-w-lg mx-auto text-center">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="px-8 py-3.5 rounded-full bg-white text-black font-bold text-sm sm:text-base transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.15)]"
-              style={{ animation: 'pulse-glow 3s ease-in-out infinite' }}
+        <section className="w-full relative mt-16 sm:mt-24 mb-16 overflow-hidden flex flex-col items-center">
+          <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.2em] uppercase mb-10 font-medium">
+            Available at your favorite pharmacy partners
+          </p>
+          <div className="flex w-full overflow-hidden">
+            <motion.div
+              className="flex gap-16 sm:gap-24 items-center whitespace-nowrap min-w-max"
+              animate={{ x: [0, -1000] }}
+              transition={{ repeat: Infinity, duration: 45, ease: 'linear' }}
             >
-              Get Notified on Launch
-            </button>
+              <div className="flex gap-16 sm:gap-24 items-center">
+                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'flipkart-minutes.webp', 'zepto.png'].map((brand) => (
+                  <Image key={brand} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-opacity" unoptimized />
+                ))}
+              </div>
+              <div className="flex gap-16 sm:gap-24 items-center pl-16 sm:pl-24">
+                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'flipkart-minutes.webp', 'zepto.png'].map((brand) => (
+                  <Image key={`dup-${brand}`} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-opacity" unoptimized />
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-            {/* Company attribution */}
-            <p className="text-[10px] sm:text-[11px] text-white/40 mt-8 tracking-[0.2em] uppercase font-semibold">
-              An Initiative by Santa Clara Wellness Pvt. Ltd.
+        {/* ══════════════════════════════════════════════════════════
+            ABOUT & MISSION
+            ══════════════════════════════════════════════════════════ */}
+        <section className="max-w-3xl mx-auto px-6 py-16 sm:py-24 text-center">
+          <h2 className="text-2xl sm:text-4xl font-bold mb-6">Our Mission</h2>
+          <p className="text-white/60 text-lg sm:text-xl leading-relaxed font-light">
+             At QUIQ, we believe that knowledge is power. Our mission is to empower individuals to take control of their own healthcare through proactive and preventative testing starting at just ₹99. We are bringing lab-grade self-testing diagnostics to every Indian home.
+          </p>
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            FOOTER & CONTACT
+            ══════════════════════════════════════════════════════════ */}
+        <footer className="w-full border-t border-white/10 mt-12 py-12 lg:py-16 px-6 bg-[#040404]">
+          <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-12 text-center md:text-left">
+            <div className="flex flex-col items-center md:items-start">
+              <div className="flex items-center gap-3 mb-5">
+                <Image src="/quiq-logo.png" alt="QUIQ Logo" width={32} height={32} className="h-7 w-auto brightness-0 invert opacity-90" unoptimized />
+                <span className="font-bold tracking-widest text-xl">QUIQ</span>
+              </div>
+              <p className="text-white/40 text-[11px] font-medium tracking-[0.1em] uppercase mb-4">
+                An Initiative by Santa Clara Wellness Pvt. Ltd.
+              </p>
+              <p className="text-white/40 text-sm max-w-xs leading-relaxed">
+                6C3, Gundecha Enclave, Kherani Road,<br/>
+                Saki Naka, Andheri East,<br/>
+                Mumbai – 400072, INDIA
+              </p>
+            </div>
+            
+            <div className="flex flex-col items-center md:items-end gap-3 text-sm">
+              <h3 className="text-white/70 font-semibold mb-2 uppercase tracking-wider text-xs">Reach Out</h3>
+              <a href="mailto:info@quiq.health" className="text-white/40 hover:text-white transition-colors">
+                info@quiq.health
+              </a>
+              <a href="tel:+912267258000" className="text-white/40 hover:text-white transition-colors">
+                +91 22 6725 8000
+              </a>
+              <p className="text-white/30 pt-1">Mon–Sat, 10am–6pm IST</p>
+            </div>
+          </div>
+          <div className="w-full max-w-[1600px] mx-auto mt-16 pt-8 border-t border-white/5 text-center flex flex-col items-center gap-4">
+            <p className="text-white/20 text-[11px]">
+              © 2026 Santa Clara Wellness Pvt. Ltd. All rights reserved.
             </p>
           </div>
-        </motion.div>
+        </footer>
       </div>
 
       {/* ══════════════════════════════════════════════════════════
