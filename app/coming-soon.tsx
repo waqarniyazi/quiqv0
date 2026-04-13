@@ -507,12 +507,12 @@ export function ComingSoonPage() {
             >
               <div className="flex gap-16 sm:gap-24 items-center">
                 {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'zepto.png'].map((brand) => (
-                  <Image key={brand} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-opacity" unoptimized />
+                  <Image key={brand} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:brightness-100 hover:invert-0 hover:opacity-100 transition-all duration-300" unoptimized />
                 ))}
               </div>
               <div className="flex gap-16 sm:gap-24 items-center">
                 {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'zepto.png'].map((brand) => (
-                  <Image key={`dup-${brand}`} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-opacity" unoptimized />
+                  <Image key={`dup-${brand}`} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:brightness-100 hover:invert-0 hover:opacity-100 transition-all duration-300" unoptimized />
                 ))}
               </div>
             </motion.div>
@@ -523,22 +523,17 @@ export function ComingSoonPage() {
             FOOTER & CONTACT
             ══════════════════════════════════════════════════════════ */}
         <footer className="w-full border-t border-white/10 mt-2 py-5 lg:py-8 px-6 bg-[#040404]">
-          {/* Big centered QUIQ logo on top */}
-          <div className="flex flex-col items-center mb-12 lg:mb-16">
-            <Image
-              src="/quiq-logo.png"
-              alt="QUIQ Logo"
-              width={120}
-              height={120}
-              className="w-40 sm:w-40 lg:w-60 h-auto brightness-0 invert opacity-70 mb-4"
-              unoptimized
-            />
-
-          </div>
-
           <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-12 text-center md:text-left">
             <div className="flex flex-col items-center md:items-start">
-              <p className="text-white/40 text-[11px] font-medium tracking-[0.1em] uppercase mb-4">
+              <Image
+                src="/quiq-logo.png"
+                alt="QUIQ Logo"
+                width={120}
+                height={120}
+                className="w-40 sm:w-40 lg:w-60 h-auto brightness-0 invert opacity-70 mb-4"
+                unoptimized
+              />
+              <p className="text-white/40 text-[11px] font-medium tracking-[0.1em] uppercase mb-4 mt-2">
                 A venture by Santa Clara Wellness Pvt. Ltd.
               </p>
               <p className="text-white/40 text-sm max-w-xs leading-relaxed">
