@@ -433,10 +433,20 @@ export function ComingSoonPage() {
             ABOUT & MISSION
             ══════════════════════════════════════════════════════════ */}
         <section className="max-w-3xl mx-auto px-6 py-12 sm:py-16 text-center">
-          <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.2em] uppercase mb-4 font-medium">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+            className="text-[10px] sm:text-xs text-white/30 tracking-[0.2em] uppercase mb-4 font-medium"
+          >
             Our Mission
-          </p>
-          <h2
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 leading-snug"
             style={{
               background: 'linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.45) 100%)',
@@ -447,24 +457,40 @@ export function ComingSoonPage() {
             }}
           >
             We aim to provide affordable and high quality self testing diagnostics to everyone in India.
-          </h2>
-          <p className="text-white/50 text-base sm:text-lg leading-relaxed font-light mt-2 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-white/50 text-base sm:text-lg leading-relaxed font-light mt-2 max-w-2xl mx-auto"
+          >
             At QUIQ, we enable proactive health decisions through clinically reliable, at-home diagnostics, for a variety of categories starting ₹99.
-          </p>
+          </motion.p>
 
-          <div className="flex flex-wrap justify-center gap-2.5 sm:gap-4 mt-8 sm:mt-10 max-w-2xl mx-auto">
-            {CATEGORIES.map(({ Icon, label, color }) => (
-              <div
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap justify-center gap-2.5 sm:gap-4 mt-8 sm:mt-10 max-w-2xl mx-auto"
+          >
+            {CATEGORIES.map(({ Icon, label, color }, idx) => (
+              <motion.div
                 key={label}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.4, delay: 0.3 + idx * 0.05 }}
                 className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm"
               >
                 <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color }} />
                 <span className="text-xs sm:text-sm font-medium tracking-wide text-white/80">
                   {label}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </section>
 
         {/* ══════════════════════════════════════════════════════════
