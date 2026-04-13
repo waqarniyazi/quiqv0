@@ -27,7 +27,6 @@ const CATEGORIES = [
   { Icon: Activity, label: 'Metabolic', color: '#a7dfba' },
   { Icon: Shield, label: 'Immunity', color: '#a5c8fe' },
   { Icon: Heart, label: 'Heart', color: '#fda4af' },
-  { Icon: Droplets, label: 'Blood', color: '#fca5a5' },
 ]
 
 /* ═══════════════════════════════════════════════════════════════════
