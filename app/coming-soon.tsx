@@ -6,6 +6,7 @@ import Image from 'next/image'
 import {
   Zap, Sun, Activity, Shield, Heart, Droplets,
   ArrowRight, Mail, Check,
+  ChevronLeft, ChevronRight,
 } from 'lucide-react'
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -139,10 +140,8 @@ function OrbitalCarousel() {
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  useEffect(() => {
-    const id = setInterval(() => setActiveIdx(prev => (prev + 1) % N), 3000)
-    return () => clearInterval(id)
-  }, [N])
+  const handlePrev = () => setActiveIdx(prev => (prev - 1 + N) % N)
+  const handleNext = () => setActiveIdx(prev => (prev + 1) % N)
 
   return (
     <div className="relative w-full h-[360px] sm:h-[430px] lg:h-[500px] flex flex-col items-center justify-center">
@@ -227,17 +226,34 @@ function OrbitalCarousel() {
       </div>
 
       {/* Orbit step indicators */}
-      <div className="flex justify-center gap-1.5 mt-1">
+      <div className="flex justify-center gap-1.5 mt-1 z-20">
         {PRODUCTS.map((_, i) => (
           <button
             key={i}
             onClick={() => setActiveIdx(i)}
             aria-label={`Show product ${i + 1}`}
-            className={`h-1 rounded-full transition-all duration-500 ${i === activeIdx ? 'w-6 bg-white/60' : 'w-1.5 bg-white/15 hover:bg-white/30'
+            className={`h-1.5 rounded-full transition-all duration-500 ${i === activeIdx ? 'w-6 bg-white/80' : 'w-1.5 bg-white/20 hover:bg-white/40'
               }`}
           />
         ))}
       </div>
+
+      {/* Manual controls */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-2 sm:left-6 z-20 p-2 sm:p-2.5 rounded-full bg-white/[0.03] backdrop-blur-md border border-white/10 hover:bg-white/10 text-white/50 hover:text-white transition-all duration-300"
+        aria-label="Previous product"
+      >
+        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+      </button>
+
+      <button
+        onClick={handleNext}
+        className="absolute right-2 sm:right-6 z-20 p-2 sm:p-2.5 rounded-full bg-white/[0.03] backdrop-blur-md border border-white/10 hover:bg-white/10 text-white/50 hover:text-white transition-all duration-300"
+        aria-label="Next product"
+      >
+        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+      </button>
     </div>
   )
 }
@@ -315,7 +331,7 @@ export function ComingSoonPage() {
             priority
           />
           <div className="w-px h-4 bg-white/[0.08]" />
-          <span className="text-[11px] text-white/30 tracking-[0.15em] uppercase font-medium">
+          <span className="text-[11px] text-white/60 tracking-[0.15em] uppercase font-medium">
             Coming Soon
           </span>
         </div>
@@ -373,9 +389,9 @@ export function ComingSoonPage() {
               transition={{ duration: 0.7, delay: 0.5 }}
               className="text-base sm:text-lg text-white/45 font-light max-w-md leading-relaxed lg:mb-3"
             >
-              Reliable self-testing you can do at home,
+              Clinically validated self-tests, designed for home use.
               <br className="hidden sm:block" />
-              results in 5 minutes, starting at just ₹99.
+              Results in minutes. <span className="text-white font-medium">Starting ₹99.</span>
             </motion.p>
 
             {/* CTA Button */}
@@ -387,10 +403,17 @@ export function ComingSoonPage() {
             >
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-8 py-3.5 rounded-full bg-white text-black font-bold text-sm sm:text-base transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.15)]"
-                style={{ animation: 'pulse-glow 3s ease-in-out infinite' }}
+                className="group relative inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm sm:text-base font-semibold transition-all duration-400 hover:scale-[1.04] active:scale-[0.97]"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  boxShadow: '0 0 20px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.08)',
+                }}
               >
-                Get Notified on Launch
+                <span className="text-white/90 tracking-wide group-hover:text-white transition-colors duration-300">
+                  Request Early Access
+                </span>
+                <ArrowRight className="w-4 h-4 text-white/60 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" />
               </button>
             </motion.div>
           </div>
@@ -413,12 +436,35 @@ export function ComingSoonPage() {
           <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.2em] uppercase mb-4 font-medium">
             Our Mission
           </p>
-          <h2 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 leading-snug">
+          <h2
+            className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 leading-snug"
+            style={{
+              background: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.45) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              paddingBlock: '0.1em',
+            }}
+          >
             We aim to provide affordable and high quality self testing diagnostics to everyone in India.
           </h2>
           <p className="text-white/50 text-base sm:text-lg leading-relaxed font-light mt-2 max-w-2xl mx-auto">
-             At QUIQ, we believe that knowledge is power. We are empowering individuals to take control of their own healthcare through proactive and preventative testing starting at just ₹99.
+            At QUIQ, we enable proactive health decisions through clinically reliable, at-home diagnostics, for a variety of categories starting ₹99.
           </p>
+
+          <div className="flex flex-wrap justify-center gap-2.5 sm:gap-4 mt-8 sm:mt-10 max-w-2xl mx-auto">
+            {CATEGORIES.map(({ Icon, label, color }) => (
+              <div
+                key={label}
+                className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm"
+              >
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color }} />
+                <span className="text-xs sm:text-sm font-medium tracking-wide text-white/80">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* ══════════════════════════════════════════════════════════
@@ -426,7 +472,7 @@ export function ComingSoonPage() {
             ══════════════════════════════════════════════════════════ */}
         <section className="w-full relative py-8 sm:py-12 mb-8 overflow-hidden flex flex-col items-center">
           <p className="text-[10px] sm:text-xs text-white/30 tracking-[0.2em] uppercase mb-8 font-medium">
-            Partnered with
+            Launching Across
           </p>
           <div className="flex w-full overflow-hidden">
             <motion.div
@@ -435,12 +481,12 @@ export function ComingSoonPage() {
               transition={{ repeat: Infinity, duration: 45, ease: 'linear' }}
             >
               <div className="flex gap-16 sm:gap-24 items-center">
-                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'flipkart-minutes.webp', 'zepto.png'].map((brand) => (
+                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'zepto.png'].map((brand) => (
                   <Image key={brand} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-opacity" unoptimized />
                 ))}
               </div>
-              <div className="flex gap-16 sm:gap-24 items-center pl-16 sm:pl-24">
-                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'flipkart-minutes.webp', 'zepto.png'].map((brand) => (
+              <div className="flex gap-16 sm:gap-24 items-center">
+                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'zepto.png'].map((brand) => (
                   <Image key={`dup-${brand}`} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-opacity" unoptimized />
                 ))}
               </div>
@@ -451,23 +497,32 @@ export function ComingSoonPage() {
         {/* ══════════════════════════════════════════════════════════
             FOOTER & CONTACT
             ══════════════════════════════════════════════════════════ */}
-        <footer className="w-full border-t border-white/10 mt-12 py-12 lg:py-16 px-6 bg-[#040404]">
+        <footer className="w-full border-t border-white/10 mt-2 py-5 lg:py-8 px-6 bg-[#040404]">
+          {/* Big centered QUIQ logo on top */}
+          <div className="flex flex-col items-center mb-12 lg:mb-16">
+            <Image
+              src="/quiq-logo.png"
+              alt="QUIQ Logo"
+              width={120}
+              height={120}
+              className="w-40 sm:w-40 lg:w-60 h-auto brightness-0 invert opacity-70 mb-4"
+              unoptimized
+            />
+
+          </div>
+
           <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-12 text-center md:text-left">
             <div className="flex flex-col items-center md:items-start">
-              <div className="flex items-center gap-3 mb-5">
-                <Image src="/quiq-logo.png" alt="QUIQ Logo" width={32} height={32} className="h-7 w-auto brightness-0 invert opacity-90" unoptimized />
-                <span className="font-bold tracking-widest text-xl">QUIQ</span>
-              </div>
               <p className="text-white/40 text-[11px] font-medium tracking-[0.1em] uppercase mb-4">
-                An Initiative by Santa Clara Wellness Pvt. Ltd.
+                A venture by Santa Clara Wellness Pvt. Ltd.
               </p>
               <p className="text-white/40 text-sm max-w-xs leading-relaxed">
-                6C3, Gundecha Enclave, Kherani Road,<br/>
-                Saki Naka, Andheri East,<br/>
-                Mumbai – 400072, INDIA
+                6C3, Gundecha Enclave, Kherani Road,<br />
+                Saki Naka, Andheri (E),<br />
+                Mumbai, Maharashtra 400072, INDIA
               </p>
             </div>
-            
+
             <div className="flex flex-col items-center md:items-end gap-3 text-sm">
               <h3 className="text-white/70 font-semibold mb-2 uppercase tracking-wider text-xs">Reach Out</h3>
               <a href="mailto:info@quiq.health" className="text-white/40 hover:text-white transition-colors">
@@ -476,11 +531,11 @@ export function ComingSoonPage() {
               <a href="tel:+912267258000" className="text-white/40 hover:text-white transition-colors">
                 +91 22 6725 8000
               </a>
-              <p className="text-white/30 pt-1">Mon–Sat, 10am–6pm IST</p>
+
             </div>
           </div>
           <div className="w-full max-w-[1600px] mx-auto mt-16 pt-8 border-t border-white/5 text-center flex flex-col items-center gap-4">
-            <p className="text-white/20 text-[11px]">
+            <p className="text-white/80 text-[11px]">
               © 2026 Santa Clara Wellness Pvt. Ltd. All rights reserved.
             </p>
           </div>
@@ -504,19 +559,19 @@ export function ComingSoonPage() {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="w-full max-w-md bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden"
             >
-              <button 
+              <button
                 onClick={() => setIsModalOpen(false)}
                 className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors p-2"
               >
                 ✕
               </button>
-              
-              <h2 className="text-xl sm:text-2xl font-bold mb-3">Be first in line</h2>
+
+              <h2 className="text-xl sm:text-2xl font-bold mb-3">Request Early Access</h2>
               <p className="text-white/60 mb-8 text-sm leading-relaxed">
-                QUIQ is bringing lab-grade self-testing to every Indian home. 
+                QUIQ is bringing lab-grade self-testing to every Indian home.
                 Join our waitlist to be notified the exact moment we launch our testing kits.
               </p>
-              
+
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
@@ -545,7 +600,7 @@ export function ComingSoonPage() {
                       </>
                     ) : (
                       <>
-                        <span>Join Waitlist</span>
+                        <span>Get Notified on Launch</span>
                         <ArrowRight className="w-5 h-5" />
                       </>
                     )}
