@@ -370,7 +370,7 @@ export function ComingSoonPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-4xl sm:text-5xl lg:text-[3.4rem] xl:text-6xl font-bold tracking-tight leading-[1.08] mb-5"
               style={{
-                background: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.45) 100%)',
+                background: 'linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.45) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -439,7 +439,7 @@ export function ComingSoonPage() {
           <h2
             className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 leading-snug"
             style={{
-              background: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.45) 100%)',
+              background: 'linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.45) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
