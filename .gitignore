@@ -26,6 +26,9 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# subscriber data (contains PII)
+subscribers.json
+
 # vercel
 .vercel
 

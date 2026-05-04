@@ -302,7 +302,7 @@ const faqJsonLd = {
       name: 'How much do QUIQ self-test kits cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'QUIQ self-test kits start at just ₹99, making lab-grade diagnostics affordable for everyone in India. Traditional lab tests for the same conditions typically cost ₹500–₹2000+.',
+        text: 'QUIQ self-test kits start at just ₹99, making accurate & reliable diagnostics affordable for everyone in India. Traditional lab tests for the same conditions typically cost ₹500–₹2000+.',
       },
     },
     {

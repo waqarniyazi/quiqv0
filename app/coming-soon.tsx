@@ -266,7 +266,11 @@ export function ComingSoonPage() {
   const [submitted, setSubmitted] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [consentGiven, setConsentGiven] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
   const gradientRef = useRef<HTMLDivElement>(null)
+  const modalContentRef = useRef<HTMLDivElement>(null)
 
   /* ── Mouse-following ambient glow (desktop only) ──────────── */
   useEffect(() => {
@@ -281,16 +285,72 @@ export function ComingSoonPage() {
     return () => window.removeEventListener('mousemove', handleMouse)
   }, [])
 
+  /* ── Dismiss modal on ESC key ────────────────────────────── */
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        setIsModalOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isModalOpen])
+
+  /* ── Reset form when modal closes ────────────────────────── */
+  useEffect(() => {
+    if (!isModalOpen) {
+      // Reset form state after close animation
+      const timer = setTimeout(() => {
+        setErrorMsg('')
+        setConsentGiven(false)
+        if (!submitted) setEmail('')
+      }, 300)
+      return () => clearTimeout(timer)
+    }
+  }, [isModalOpen, submitted])
+
   /* ── Email form handler ───────────────────────────────────── */
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
-    // TODO: Wire to backend (Netlify Forms / API route / Resend / Mailchimp)
-    setSubmitted(true)
-    setShowConfetti(true)
-    setEmail('')
-    setTimeout(() => setShowConfetti(false), 1000)
-    setTimeout(() => setSubmitted(false), 4000)
+    setErrorMsg('')
+
+    if (!consentGiven) {
+      setErrorMsg('Please agree to receive updates to continue.')
+      return
+    }
+
+    setIsLoading(true)
+
+    try {
+      const res = await fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, consentGiven }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setErrorMsg(data.error || 'Something went wrong. Please try again.')
+        setIsLoading(false)
+        return
+      }
+
+      setSubmitted(true)
+      setShowConfetti(true)
+      setEmail('')
+      setConsentGiven(false)
+      setTimeout(() => setShowConfetti(false), 1000)
+      setTimeout(() => {
+        setSubmitted(false)
+        setIsModalOpen(false)
+      }, 3000)
+    } catch {
+      setErrorMsg('Network error. Please check your connection and try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -410,7 +470,7 @@ export function ComingSoonPage() {
                 }}
               >
                 <span className="text-white/90 tracking-wide group-hover:text-white transition-colors duration-300">
-                  Request Early Access
+                  Notify Me
                 </span>
                 <ArrowRight className="w-4 h-4 text-white/60 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" />
               </button>
@@ -506,12 +566,12 @@ export function ComingSoonPage() {
               transition={{ repeat: Infinity, duration: 45, ease: 'linear' }}
             >
               <div className="flex gap-16 sm:gap-24 items-center">
-                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'zepto.png'].map((brand) => (
+                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.png', 'blinkit.png', 'zepto.png'].map((brand) => (
                   <Image key={brand} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:brightness-100 hover:invert-0 hover:opacity-100 transition-all duration-300" unoptimized />
                 ))}
               </div>
               <div className="flex gap-16 sm:gap-24 items-center">
-                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.svg', 'blinkit.png', 'zepto.png'].map((brand) => (
+                {['Amazon.png', 'Flipkart.svg', 'PharmEasy.png', 'Tata_1mg.png', 'blinkit.png', 'zepto.png'].map((brand) => (
                   <Image key={`dup-${brand}`} src={`/brands/${brand}`} alt={brand.split('.')[0]} width={140} height={50} className="w-auto h-6 sm:h-9 object-contain brightness-0 invert opacity-40 hover:brightness-100 hover:invert-0 hover:opacity-100 transition-all duration-300" unoptimized />
                 ))}
               </div>
@@ -530,7 +590,7 @@ export function ComingSoonPage() {
                 alt="QUIQ Logo"
                 width={120}
                 height={120}
-                className="w-40 sm:w-40 lg:w-60 h-auto brightness-0 invert opacity-70 mb-4"
+                className="w-40 sm:w-40 lg:w-60 h-auto mb-4"
                 unoptimized
               />
               <p className="text-white/40 text-[11px] font-medium tracking-[0.1em] uppercase mb-4 mt-2">
@@ -572,8 +632,15 @@ export function ComingSoonPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
+            onClick={(e) => {
+              // Dismiss when clicking the backdrop (outside the modal card)
+              if (modalContentRef.current && !modalContentRef.current.contains(e.target as Node)) {
+                setIsModalOpen(false)
+              }
+            }}
           >
             <motion.div
+              ref={modalContentRef}
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -586,7 +653,7 @@ export function ComingSoonPage() {
                 ✕
               </button>
 
-              <h2 className="text-xl sm:text-2xl font-bold mb-3">Request Early Access</h2>
+              <h2 className="text-xl sm:text-2xl font-bold mb-3">Notify Me</h2>
               <p className="text-white/60 mb-8 text-sm leading-relaxed">
                 QUIQ is bringing lab-grade self-testing to every Indian home.
                 Join our waitlist to be notified the exact moment we launch our testing kits.
@@ -599,24 +666,60 @@ export function ComingSoonPage() {
                     id="coming-soon-email"
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => { setEmail(e.target.value); setErrorMsg('') }}
                     placeholder="Enter your email"
                     required
-                    disabled={submitted}
+                    disabled={submitted || isLoading}
                     className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all duration-300 disabled:opacity-50"
                   />
                 </div>
 
+                {/* Marketing consent checkbox */}
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <div className="relative mt-0.5 flex-shrink-0">
+                    <input
+                      type="checkbox"
+                      checked={consentGiven}
+                      onChange={(e) => { setConsentGiven(e.target.checked); setErrorMsg('') }}
+                      disabled={submitted || isLoading}
+                      className="sr-only peer"
+                    />
+                    <div className="w-[18px] h-[18px] rounded-[5px] border border-white/20 bg-white/5 peer-checked:bg-emerald-500/20 peer-checked:border-emerald-500/50 transition-all duration-300 flex items-center justify-center group-hover:border-white/30">
+                      {consentGiven && (
+                        <Check className="w-3 h-3 text-emerald-400" />
+                      )}
+                    </div>
+                  </div>
+                  <span className="text-[12px] text-white/45 leading-relaxed select-none group-hover:text-white/55 transition-colors">
+                    I agree to receive launch updates and promotional emails from QUIQ. I can unsubscribe at any time.
+                  </span>
+                </label>
+
+                {/* Error message */}
+                {errorMsg && (
+                  <p className="text-red-400/90 text-[13px] text-center bg-red-400/5 border border-red-400/10 rounded-lg py-2 px-3">
+                    {errorMsg}
+                  </p>
+                )}
+
                 <div className="relative" style={{ overflow: 'visible' }}>
                   <button
                     type="submit"
-                    disabled={submitted}
+                    disabled={submitted || isLoading}
                     className="w-full py-3.5 rounded-xl bg-white text-black font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 disabled:opacity-80 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
                   >
                     {submitted ? (
                       <>
                         <Check className="w-5 h-5" />
                         <span>You&apos;re on the list!</span>
+                      </>
+                    ) : isLoading ? (
+                      <>
+                        <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                        </svg>
+                        <span>Joining...</span>
                       </>
                     ) : (
                       <>
